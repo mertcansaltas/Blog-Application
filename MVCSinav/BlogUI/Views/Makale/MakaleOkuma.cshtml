@@ -1,0 +1,53 @@
+﻿@model BlogUI.Models.VMs.MakaleOkumaVM
+
+@{
+    ViewData["Title"] = "Makale Okuma";
+}
+
+<div class="container mt-4">
+    <div class="card mb-3 shadow-lg">
+        <!-- Gölgeli kart -->
+        <div class="card-body">
+            <h1 class="card-title">@Model.Baslik</h1>
+        </div>
+    </div>
+    <div class="card mb-3 shadow-lg">
+        <div class="card-body">
+            <p class="card-text">Okuma Süresi: @Model.OkumaSuresi dakika</p>
+            <p class="card-text text-muted">Yazar: <a asp-action="Detay" asp-controller="User" asp-route-id="@Model.UserId">@Model.YazarAdi</a></p>
+            <p class="card-text text-muted">Yayın Tarihi: @Model.YayınTarihi.ToShortDateString()</p>
+        </div>
+    </div>
+    
+    <div class="card mb-3 shadow-lg">
+        <!-- Gölgeli kart -->
+        <div class="card-body">
+            <div class="card-text">@Html.Raw(Model.Icerik)</div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border: none;
+        border-radius: 0; /* Kenar yuvarlaklığı kaldır */
+    }
+
+    .shadow-lg {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.6); /* Kalın ve siyah gölge */
+    }
+
+    .card-title {
+        color: black; /* Mavi renk */
+        font-size: 2rem; /* Başlık boyutu */
+        font-style: italic;
+    }
+
+    .card-text {
+        font-size: 1.2rem; /* Metin boyutu */
+    }
+
+    .text-muted {
+        color: #6c757d; /* Gri renk */
+    }
+</style>

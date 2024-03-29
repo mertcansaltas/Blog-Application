@@ -1,0 +1,74 @@
+﻿@using BlogUI.Models.VMs
+@model MakaleKonuVM;
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="jumbotron text-center">
+                <h1 class="display-4"><span style="font-weight: bold; text-decoration: underline; font-style: italic;">Blog Sitesi</span></h1>
+                <hr class="my-4">
+                @if (User.Identity.IsAuthenticated)
+                {
+
+                    <form asp-area="" asp-controller="User" asp-action="Index" method="get">
+                        <button type="submit" class="btn btn-secondary text-dark">Takip Edilen Konular</button>
+                    </form>
+
+                }
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-12">
+            <h2>En Çok Okunan Makaleler</h2>
+            <table class="table table-hover  table-striped table-bordered table-hover shadow-lg">
+                <thead>
+                    <tr>
+                        <th>Başlık</th>
+                        <th>İçerik</th>
+                        <th>Oluşturulma Tarihi</th>
+                        <th>Okuma Süresi</th>
+                        <th>Görüntülenme Sayısı</th>
+                        <th></th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var makale in Model.Makaleler)
+                    {
+                        <tr>
+                            <td>@makale.Baslik</td>
+                            <td>@makale.Icerik.Substring(0,50)...</td>
+                            <td>@makale.YayınTarihi.ToShortDateString()</td>
+                            <td>@makale.OkumaSuresi</td>
+                            <td>@makale.OkunmaSayisi</td>
+                            
+                            <td>
+                                <form asp-action="MakaleOkuma" asp-controller="Makale" asp-route-id="@makale.Id" method="get">
+                                    <button type="submit" class="btn btn-primary">Makaleye Git</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <h2 class="col-12">Konulara Göz Atın</h2>
+        @foreach (var konu in Model.Konular)
+        {
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@konu.KonuAdi</h5>
+                        <form asp-action="MakaleleriGor" asp-controller="Makale" asp-route-id="@konu.Id" method="get">
+                            <button type="submit" class="btn btn-info">Detay'a Git</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

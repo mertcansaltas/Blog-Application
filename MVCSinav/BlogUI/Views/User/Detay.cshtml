@@ -1,0 +1,38 @@
+﻿@using BlogUI.Models.VMs
+
+@model YazarDetayVM
+
+<style>
+    /* Card gölgesi */
+    .card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: 2px solid #000; /* Çizgilerin kalınlığı */
+    }
+
+    /* Kullanıcı adı ve soyadı kalın */
+    .user-name {
+        font-weight: bold;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 mb-3">
+            <h2 class="text-center"><span class="user-name">@Model.User.Ad</span> <span class="user-name">@Model.User.Soyad</span></h2>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var makale in Model.Makaleler)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@makale.Baslik</h5>
+                        <p class="card-text">@makale.Icerik</p>
+                        <a href="@Url.Action("MakaleOkuma", "Makale", new { id = makale.Id })" class="btn btn-primary">Makaleye Git</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

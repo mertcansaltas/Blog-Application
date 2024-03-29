@@ -1,0 +1,75 @@
+﻿@model BlogUI.Models.VMs.MakaleEklemeVM
+@{
+    ViewData["Title"] = "Ekle";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Makale Ekle</h2>
+                    <form asp-action="Ekle" class="needs-validation" novalidate>
+                        <div class="form-group">
+                            <label for="Baslik">Başlık</label>
+                            <input type="text" class="form-control" id="Baslik" name="Baslik" value="@Model.Baslik" required>
+                            <div class="invalid-feedback">Lütfen başlık girin.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Icerik">İçerik</label>
+                            <textarea class="form-control" id="Icerik" name="Icerik" required>@Model.Icerik</textarea>
+                            <div class="invalid-feedback">Lütfen içerik girin.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="OkumaSuresi">Okuma Süresi (Dakika)</label>
+                            <input type="number" class="form-control" id="OkumaSuresi" name="OkumaSuresi" value="@Model.OkumaSuresi" required>
+                            <div class="invalid-feedback">Lütfen okuma süresi girin.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="YayinTarihi">Yayın Tarihi</label>
+                            <input type="date" class="form-control" id="YayinTarihi" name="YayinTarihi" value="@Model.YayinTarihi" required>
+                            <div class="invalid-feedback">Lütfen yayın tarihi girin.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="OkunmaSayisi">Okunma Sayısı</label>
+                            <input type="number" class="form-control" id="OkunmaSayisi" name="OkunmaSayisi" value="@Model.OkunmaSayisi" required>
+                            <div class="invalid-feedback">Lütfen okunma sayısı girin.</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Konular</label>
+                            @foreach (var konu in Model.TumKonular)
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="SecilenKonular" value="@konu.Value" id="@("chk_" + konu.Value)">
+                                    <label class="form-check-label" for="@("chk_" + konu.Value)">@konu.Text</label>
+                                </div>
+                            }
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Ekle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Bu script, form elemanlarının gerektiği gibi doğrulanmasını sağlar
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+}
